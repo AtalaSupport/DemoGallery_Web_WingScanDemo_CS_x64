@@ -374,3 +374,7 @@ FodyWeavers.xsd
 #**/Saved/*
 #**/Saves/*
 
+# Try not to ignore readmes
+!README.txt
+!README.md
+
