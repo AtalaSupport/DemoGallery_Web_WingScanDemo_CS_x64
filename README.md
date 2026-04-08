@@ -6,17 +6,11 @@ WingScan enables direct scanning from a web browser to a designated repository, 
 
 We have a really solid step by step tutorial for [Getting Started with WingScan  for .NET Framework](https://www.atalasoft.com/kb2/KB/50039/INFO-WingScan-Whitepaper-Getting-Started-with-Web-Scanning), and a [separate tutorial for .NET 8+](https://www.atalasoft.com/kb2/KB/50039/INFO-WingScan-Whitepaper-Getting-Started-with-Web-Scanning) (sometimes called .NET Core)
 
+This is the C# version. We also offer a [VB.NET version](https://github.com/AtalaSupport/DemoGallery_Web_WingScanDemo_VB_x64).
+
 
 ## Licensing
 This application as configured, requires at minimum WingScan license.
-
-If you do not have  PdfReader license, you can adjust the app to not require it (and lose the ability to open PDFs) by modifying the WebDocViewerHandler.ashx codebehind. To do so, comment out the following line and rebuild:
-
-```csharp
-RegisteredDecoders.Decoders.Add(new PdfDecoder() { Resolution = 200, RenderSettings = new RenderSettings() { AnnotationSettings = AnnotationRenderSettings.RenderNone } });
-```
-
-If you are using PDFs and you wish to burn annotations (printing in this example), you must also have a licnse for our DotPdf (separate from PdfReader), or a valid evaluation, or else saving with the burn flag true will fail.
 
 > **NOTE**
 > Developer licenses (Serials without an X in the first group) are for use on your local development machine only, and will display an error that they are to be used for development and testing on local host only if you access from any other URL than a localhost.  
@@ -41,21 +35,34 @@ As this is a web application, it also requires our client side web resources. Ag
 
 These Resources are distributed with our SDK and can be found under:  
 `C:\Program Files (x86)\Atalasoft\DotImage 2026.2\bin\WebResources\WebDocViewer`  
+and
+`C:\Program Files (x86)\Atalasoft\DotImage 2026.2\bin\WebResources\WebCapture`
 
 Additionally, if the resources for the version you're targeting differ from the versions we ship, you must modify the head section of the Default.aspx page accordingly. This is the content that is valid for 11.5.0.x - 2026.2.x.
 
 ```html
 <head runat="server">
-    <title>Simple Web Document Viewer with WebDocument Thumbnailer and Annotations</title>
-
+    <title>Atalasoft's WingScan Demo</title>
+    
+    <!-- Script Includes for Web Viewing -->
     <script src="WebDocViewer/jquery-3.5.1.min.js" type="text/javascript"></script>
     <script src="WebDocViewer/jquery-ui-1.14.0.min.js" type="text/javascript"></script>
     <script src="WebDocViewer/raphael-min.js" type="text/javascript"></script>
     <script src="WebDocViewer/clipboard.min.js" type="text/javascript"></script>
     <script src="WebDocViewer/atalaWebDocumentViewer.js" type="text/javascript"></script>
 
+    <!-- Style for Web Viewing -->
     <link href="WebDocViewer/jquery-ui-1.14.0.min.css" rel="Stylesheet" type="text/css" />
     <link href="WebDocViewer/atalaWebDocumentViewer.css" rel="Stylesheet" type="text/css" />
+
+    <!-- Script for Web Scanning -->
+    <script src="WebCapture/atalaWebCapture.js" type="text/javascript"></script>
+    
+    <!-- Scripts specific to this demo -->
+    <script src="Scripts/Initialization.js" type="text/javascript"></script>
+    <script src="Scripts/ErrorsAndEvents.js" type="text/javascript"></script>
+    <script src="Scripts/Customization.js" type="text/javascript"></script>
+    <link href="WingScanStyling.css" rel="stylesheet" type="text/css" />
 </head>
 ```
 
@@ -72,15 +79,11 @@ Still, if you wish to use NuGet for the dependencies instead of relying on local
     - Atalasoft.dotImage.dll
     - Atalasoft.dotImage.Lib.dll
     - Atalasoft.dotImage.WebControls.dll
-    - Atalasoft.dotImage.PdfDoc.Bridge.dll
-    - Atalasoft.dotImage.PdfReader.dll
-    - Atalasoft.PdfDoc.dll
     - Atalasoft.Shared.dll
 - Remove those referneces
 - Open the NuGet Package Manger from `Tools -> NuGet Package Manager -> Manage NuGet Packages for this Solution`
 - Browse for Atalasoft.DotImage.WebControls.x64
 - Install this package, and it will pull in most of what is needed
-- You may need to browse additionally for Atalasoft.DotImage.PdfReader.x64
 - If you want the clientside resources, you'll want to browse next for Atalasoft.Web.Document.Viewer
     - NOTE that if you install from the NuGet for this, you will then need to adjust all of the WebDocViewer links as NuGet uses a different folder structure (see above)
 
@@ -107,10 +110,10 @@ Please see the section on licensing above for additional discussion.
 To use this repro just use:  
 
 ```
-git clone https://github.com/AtalaSupport/DemoGallery_Wev_WebViewingDemo_CS_x64.git WebViewingDemo
+git clone https://github.com/AtalaSupport/DemoGallery_Wev_WingScanDemo_VB_x64.git WingScanDemo
 ```
 
-If you've got DotImage 2026.2 installed and licensed, it should just build and run.  
+If you've got DotImage 2026.2 installed and WingScan licensed, it should just build and run.  
 
 ## Related documentation
 In addition to this README, the Atalasoft documentation set includes the following:  
@@ -118,8 +121,8 @@ In addition to this README, the Atalasoft documentation set includes the followi
 - In addition, you can also refer to the following Atalasoft resources:
     - [Atalasoft Support](http://www.atalasoft.com/support/)
     - [Atalasoft Knowledgebase](http://www.atalasoft.com/kb2)
-- [WDV Clientside API Reference](https://atalasoft.github.io/web-document-viewer/) applies to the client side (JavaScript) components.
-
+- [WDV Clientside API Reference](https://atalasoft.github.io/web-document-viewer/) applies to the client side (JavaScript) components specific to the WebDocumentViewer component.
+- [Wev Capture Clientside API Reference](https://atalasoft.github.io/web-capture-service/) applies to the client side (JavaScript) components specific to the WebCapture component.
 
 ## Getting Help for Atalasoft products
 Atalasoft regularly updates our support [Knowledgebase](http://www.atalasoft.com/kb2) with the latest information about our products. To access some resources, you must have a valid Support Agreement with an authorized Atalasoft Reseller/Partner or with Atalasoft directly. Use the tools that Atalasoft provides for researching and identifying issues. 
